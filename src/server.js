@@ -6,10 +6,19 @@ import morgan from "morgan"
 import dotenv from "dotenv"
 import axios from "axios"
 import { XMLParser } from "fast-xml-parser"
+import rateLimit from "express-rate-limit"
 
 dotenv.config()
 
 const app = express()
+
+const limiter = rateLimit({
+  windowMs: 5 * 60 * 1000, // 5 minutes
+  max: 30, // Limit each IP to 30 requests per windowMs
+  message: "Too many requests from this IP, please try again after 5 minutes",
+})
+
+app.use(limiter)
 
 app.use(cors())
 app.use(helmet())
