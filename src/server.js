@@ -12,6 +12,8 @@ dotenv.config()
 
 const app = express()
 
+app.set("trust proxy", 1)
+
 const limiter = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutes
   max: 30, // Limit each IP to 30 requests per windowMs
